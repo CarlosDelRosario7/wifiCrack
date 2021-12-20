@@ -18,7 +18,9 @@ Baje el repositorio en caso de que aún no lo ha hecho.
 Entre al directorio y copie el archivo a /usr/bin.
 
 > cd wifiCrack
+
 > chmod +x wifiCrack
+
 > cp wifiCrack /usr/bin
 
 Hecho esto, el programa estará listo para utilizarse desde cualquier directorio.
