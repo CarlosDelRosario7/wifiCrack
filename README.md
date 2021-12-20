@@ -39,3 +39,10 @@ Donde:
 > wordlists
 
 Se dirigirá a donde están las wordlist del sistema. En caso de tener una descargada en su computador, puedes indicar su dirección en el programa sin problemas.
+
+### Nota
+En caso de que logró descifrar la clave, pero la red es oculta y no conoces su nombre, ejecute el siguiente comando:
+
+> cat Captura-01.csv
+
+El nombre suele estar debajo de "ESSID".
