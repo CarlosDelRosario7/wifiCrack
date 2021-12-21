@@ -1,15 +1,15 @@
 # wifiCrack
 
-Archivo.sh que facilita el uso de aircrack-ng para la auditoría de red WiFi. El programa instala las dependencia si no están.
+Archivo.sh que facilita el uso de aircrack-ng para la auditoría de red WiFi. El programa instala las dependencias si no están.
 
-## Dependencia
+## Dependencias
 
 - aircrack-ng
 - macchanger
 
 ## Agregue a variable de entorno
 
-Si deseas utilizar esta herramienta desde cualquier directorio, agréguela a la variable de entorno o corra los siguientes comandos lo siguiente:
+Si deseas utilizar esta herramienta desde cualquier directorio, agréguela a la variable de entorno o corra los siguientes comandos:
 
 Baje el repositorio en caso de que aún no lo ha hecho.
 
@@ -27,10 +27,10 @@ Hecho esto, el programa estará listo para utilizarse desde cualquier directorio
 
 ## Uso
 
-> wifiCrack -t wlan0 -w wordlist/path
+> wifiCrack -t wlanX -w wordlist/path
 
 Donde:
-- "wlan0" es el nombre de la tarjeta de red wifi que tienes. Generalmente suele ser "wlan0". Para saber el nombre de su tarjeta de red ejecute el siguiente comando...
+- "wlanX" es el nombre de la tarjeta de red wifi que tienes. Generalmente suele ser "wlan0". Para saber el nombre de su tarjeta de red ejecute el siguiente comando...
 
 > ifconfig
 
